@@ -1,0 +1,81 @@
+import java.util.Scanner;
+
+class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void displayPerson() {
+        System.out.println("Name   : " + name);
+        System.out.println("Age    : " + age);
+    }
+}
+
+class Employee extends Person {
+    int empId;
+    double salary;
+
+    Employee(String name, int age, int empId, double salary) {
+        super(name, age);
+        this.empId = empId;
+        this.salary = salary;
+    }
+
+    void displayEmployee() {
+        displayPerson();
+        System.out.println("Emp ID : " + empId);
+        System.out.println("Salary : " + salary);
+    }
+}
+
+class Manager extends Employee {
+    String department;
+
+    Manager(String name, int age, int empId, double salary, String department) {
+        super(name, age, empId, salary);
+        this.department = department;
+    }
+
+    void displayManager() {
+        displayEmployee();
+        System.out.println("Dept   : " + department);
+    }
+}
+
+public class ManagerDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        try {
+            System.out.print("Enter name: ");
+            String name = sc.nextLine();
+            System.out.print("Enter age: ");
+            int age = Integer.parseInt(sc.nextLine());
+            System.out.print("Enter employee ID: ");
+            int id = Integer.parseInt(sc.nextLine());
+            System.out.print("Enter salary: ");
+            double salary = Double.parseDouble(sc.nextLine());
+
+            if (salary < 0) {
+                throw new IllegalArgumentException("Salary cannot be negative.");
+            }
+
+            System.out.print("Enter department: ");
+            String dept = sc.nextLine();
+
+            Manager m = new Manager(name, age, id, salary, dept);
+            System.out.println("\n----- Manager Details -----");
+            m.displayManager();
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input! Please enter numeric values for age, ID and salary.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            sc.close();
+        }
+    }
+}
